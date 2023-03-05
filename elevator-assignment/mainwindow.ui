@@ -13,10 +13,6 @@
   <property name="windowTitle">
    <string>Elevator App</string>
   </property>
-  <property name="windowIcon">
-   <iconset>
-    <normaloff>../team3/res/icons/electrodeOn.svg</normaloff>../team3/res/icons/electrodeOn.svg</iconset>
-  </property>
   <widget class="QWidget" name="allWidgets">
    <layout class="QGridLayout" name="gridLayout_7">
     <item row="0" column="0" rowspan="2" colspan="2">
