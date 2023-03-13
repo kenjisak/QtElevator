@@ -24,10 +24,10 @@ class ElevatorControlSystem {
         Elevator** getelevarr();
 
 		//other
-        int flrreq(string direction,int serveflrnum);
+        string flrreq(string direction,int serveflrnum);
 		void atnewflr(int flrnum, int elevnum);
 		void elevreq(int destflrnum,int elevnum);
-        void elevsafetyreq(string safetyissue, int elevnum);
+        string elevsafetyreq(string safetyissue, int elevnum);
         string safetyreq(string safetyissue);
 
 		void timestrat();//implement time alloc strat. this will be set as the currstrat from init of ecs until ordered to changed and use the other strat functions instead
@@ -40,5 +40,6 @@ class ElevatorControlSystem {
         Floor** floors;
         int numofelevs;
         int numofflrs;
+        int obstaclecount;
 };
 #endif

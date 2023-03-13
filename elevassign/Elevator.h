@@ -29,7 +29,7 @@ class Elevator {
         int getcurrweight();
 
 		//other
-        string ringbell();
+
 		void stop();//stay at currflr
         string move(string direction);//moves the elevator in a direction supplied, up or down
 		void alarm(string safetyissue);//alarm is raised with a safety issue
@@ -38,18 +38,20 @@ class Elevator {
 		void detectflr(int flrnum);//floor sensor that detects the floor
 		void detectissue(string safetyissue);//safety sensors that detects whatever issue arises
 		void notify(int destflrnum);//gets notified from teh buttons what destination floor button has been pressed
-		void interruptclose();//when light sensor detects an obstacle, this gets activated to stop the close() of its doors
 		void ecsrequest(string msg);//receives what ever request, mainly a safety message to relay and play/display through its audiosys and display
 
 		void addPassengers();//when passenger walks in
 		void rmvPassengers();//when passenger walks off
 
-
+        string ringbell();
         string closeDoor();
         string openDoor();
+        string holdOpenDoor();
         bool checkidle();
         void setidle(bool ismoving);
         void setsafetymsg(string msg);
+        string interruptclose();//when light sensor detects an obstacle, this gets activated to stop the close() of its doors
+        string displayandplaysafetymsg();
 
 	private:
         int elevnum;
@@ -64,9 +66,6 @@ class Elevator {
 		
         string safetymsg;//gets set to the safety message given from ecs
 
-		Button* openBtn;
-		Button* closeBtn;
-
 		Button* helpBtn;
 		Button* fireBtn;
 
@@ -75,6 +74,6 @@ class Elevator {
         string display;
         string audioSys;
 
-		Passenger* passengers[MAXCAPACITY];
+        Passenger* passengers[MAXCAPACITY];//change to array of ints of pass, passengers = [1,2,3]
 };
 #endif

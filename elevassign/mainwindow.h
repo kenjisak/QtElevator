@@ -21,7 +21,10 @@ private slots:
 
     void on_closeBtn_clicked();
 
-    void on_openBtn_clicked();
+//    void on_openBtn_clicked();
+    void on_openBtn_pressed();
+
+    void on_openBtn_released();
 
     void on_upBtn_clicked();
 
@@ -34,6 +37,10 @@ private slots:
     void on_fireBtn_clicked();
 
     void on_pwroutBtn_clicked();
+
+
+
+    void on_doorBlockBtn_clicked();
 
 private:
     Ui::MainWindow *ui;

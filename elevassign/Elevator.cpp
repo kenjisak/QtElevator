@@ -11,8 +11,6 @@ Elevator::Elevator(const int& elevnum, const int& maxweight, const int& flrnum){
     this->isidle = true;
     this->safetymsg = "";
 
-    this->openBtn = new Button("open");
-    this->closeBtn = new Button("close");
     this->helpBtn = new Button("help");
     this->fireBtn = new Button("fire");
 
@@ -30,8 +28,6 @@ Elevator::Elevator(const int& elevnum, const int& maxweight, const int& flrnum){
 }
 
 Elevator::~Elevator(){
-    delete openBtn;
-    delete closeBtn;
     delete helpBtn;
     delete fireBtn;
 
@@ -74,25 +70,49 @@ string Elevator::move(string direction){
     }else{
         currflrnum -= 1;//commanded to move down by 1 floor
     }
-    display = "\nDisplay: Floor " + to_string(currflrnum) + safetymsg;//updates its display with safetymessage if there is any
-    audioSys += "\nAudio: *" + safetymsg + "*";//if there is any to play.
+    displayandplaysafetymsg();//updates display and plays audio msg if its not empty
     return "\nCar " + to_string(elevnum) + " Display: Floor " + to_string(currflrnum); //shows updated movement
 }
 //have a check for if alarm is on then return audio, maybe
 string Elevator::closeDoor(){
-    return ringbell() + "\nCar " + to_string(elevnum) + " Closed its Door.";
+    string returnthis = ringbell() + "\nCar " + to_string(elevnum) + " Closing its Door.";
+//    add delay to interrupt closing?
+    returnthis += "\nCar " + to_string(elevnum) + " Door is Closed.";
+    return returnthis;
 }
 
 string Elevator::openDoor(){
     string returnthis = "";
     returnthis += ringbell() + "\nCar " + to_string(elevnum) + " Opened its Door for 5s.";
-    returnthis += ringbell() + "\nCar " + to_string(elevnum) + " Closed its Door.";
+    //add a delay here
+    returnthis += closeDoor();
     return returnthis;
+}
+
+string Elevator::holdOpenDoor(){
+    return ringbell() + "\nCar " + to_string(elevnum) + " held Open its Door";
 }
 
 string Elevator::ringbell(){
     return "\nCar " + to_string(elevnum) + " Bell Rings.";
 }
 
+string Elevator::interruptclose(){
+    string returnthis = "";
+    returnthis += ringbell() + "\nCar " + to_string(elevnum) + " Closing its Door.";
+    returnthis += "\nCar " + to_string(elevnum) + " Obstacle in the Way.";
+    returnthis += openDoor();
+    return returnthis;
+}
+
+string Elevator::displayandplaysafetymsg(){
+
+    display = "\nDisplay: Floor " + to_string(currflrnum) + " "+ safetymsg;//updates its display with safetymessage if there is any
+    audioSys = "\nAudio: *" + safetymsg + "*";//if there is any to play.
+    if (safetymsg == ""){//if empty safetymsg dont play audio
+        return display;
+    }
+    return display + audioSys;//else play audio and display
+}
 
 
