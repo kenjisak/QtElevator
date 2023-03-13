@@ -28,40 +28,68 @@ Elevator** ElevatorControlSystem::getelevarr(){
     return elevators;
 }
 
-void ElevatorControlSystem::flrreq(string direction,int serveflrnum){//when an up or down button from the floor is pressed, this finds an elev and sends it there
+int ElevatorControlSystem::flrreq(string direction,int serveflrnum){//when an up or down button from the floor is pressed, this finds an elev and sends it there
     //if up then find a non moving elev and make it move to the serveflrnum
-    int idleelevnum;
-    if(direction == "up"){
-        //go through and find an idle/non moving elevator
-        for(int i = 0; i < numofelevs;i++){
-            if (elevators[i]->checkidle() == true){
-                idleelevnum = i;
-                break;
-            }
-        }
+    int idleelevnum = -1;//init so if no idle elevator found theyre all in use atm
 
+    //go through and find an idle elevator thats possibly on the same floor already
+//    for(int i = 0; i < numofelevs;i++){
+//        if (elevators[i]->checkidle() == true && elevators[i]->getcurrflrnum() == serveflrnum){
+//            idleelevnum = i;
+//            break;
+//        }
+//    }
+//    if(idleelevnum == -1){ //if elevator not found then find any idle elevator
+//        for(int i = 0; i < numofelevs;i++){
+//            if (elevators[i]->checkidle() == true){
+//                idleelevnum = i;
+//                break;
+//            }
+//        }
+//    }
+    for(int i = 0; i < numofelevs;i++){//go through and find an idle elevator
+        if (elevators[i]->checkidle() == true){
+            idleelevnum = i;
+            break;
+        }
+    }
+
+    if (idleelevnum != -1){ // if an elevator is found
         while (serveflrnum != elevators[idleelevnum]->getcurrflrnum()){//make the elevator move up or down until it reaches the floor that called one
+            elevators[idleelevnum]->setidle(false);//elevator is no longer idle and is moving/serving a passenger
             if(elevators[idleelevnum]->getcurrflrnum() < serveflrnum){// if the elevator is on a floor below the service floor
                 elevators[idleelevnum]->move("up");
             }else{// if the elevator is on a floor above the service floor
                 elevators[idleelevnum]->move("down");
             }
         }
-
-
+        return elevators[idleelevnum]->getElevNum();//return the elevator number that reaches the service floor //error here
+    }else{//else we didnt find an elevator so just return -1
+        return -1;
     }
 }
-void ElevatorControlSystem::atnewflr(int flrnum, int elevnum){
 
+bool ElevatorControlSystem::safetyreq(string safetyissue){
+    int safefloor = 1;
+    if (safetyissue == "fire" || "power out"){
+        //send all elevators to floor 1 as safe floor
+        //send safety messages to elevator to update its display and audio
+        //once elevators reached safe floor return true
+
+        for(int i = 0; i < numofelevs;i++){//go through and make all elevators move to safe floor
+            elevators[i]->setsafetymsg("Theres a " + safetyissue + " in the building, please disembark the elevator once the elevators reach the main floor.");
+            while (safefloor != elevators[i]->getcurrflrnum()){//make the elevator move up or down until it reaches the safe floor
+                if(elevators[i]->getcurrflrnum() < i){// if the elevator is on a floor below the safe floor
+                    elevators[i]->move("up");
+                }else{// if the elevator is on a floor above the safe floor
+                    elevators[i]->move("down");
+                }
+            }
+            //once there open it rings and opens its doors
+            elevators[i]->openDoor();
+        }
+
+        return true;//all elevators reached safe floor
+    }
+    return false;
 }
-void ElevatorControlSystem::elevreq(int destflrnum,int elevnum){
-
-}
-void ElevatorControlSystem::elevreq(string safetyissue, int elevnum){
-
-}
-void ElevatorControlSystem::opportunisticstrat(){
-
-}
-
-

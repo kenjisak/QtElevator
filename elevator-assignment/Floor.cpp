@@ -20,18 +20,10 @@ int Floor::getflrnum(){
     return flrnum;
 }
 
-
-void Floor::notify(string direction){
-    
+Button* Floor::getUpBtn(){
+    return this->upBtn;
 }
 
-void Floor::arrived(string direction){
-    
-}
-
-void Floor::addPassengers(){
-    
-}
-void Floor::rmvPassengers(){
-    
+Button* Floor::getDownBtn(){
+    return this->downBtn;
 }

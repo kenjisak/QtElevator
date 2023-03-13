@@ -30,6 +30,8 @@ class Floor {
 		
 		void addPassengers();//when passenger walks in
 		void rmvPassengers();//when passenger walks off
+        Button* getUpBtn();
+        Button* getDownBtn();
 
 	private:
 		int flrnum;

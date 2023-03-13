@@ -29,7 +29,7 @@ class Elevator {
         int getcurrflrnum();
         int getmaxweight();
         int getdestflrnum();
-
+        int getcurrweight();
 
 		//other
         void ringbell();
@@ -51,18 +51,21 @@ class Elevator {
         void closeDoor();
         void openDoor();
         bool checkidle();
+        void setidle(bool ismoving);
+        void setsafetymsg(string msg);
 
 	private:
         int elevnum;
 		int currflrnum;
 		int maxweight;//given by user input
+        int currweight;
 		int maxcapacity;
 		int destflrnum;
 		int flrcount;
 
         bool isidle;
 		
-		string alarmmode;//gets set to the safetyissue that was sent from helpBtn,fireBtn, or sensors
+        string safetymsg;//gets set to the safety message given from ecs
 
 		Door* door;
 
@@ -74,8 +77,8 @@ class Elevator {
 
 		Button** destBtns;
 
-		Display* display;
-		AudioSystem* audioSys;
+        string display;
+        string audioSys;
 
 		Passenger* passengers[MAXCAPACITY];
 };
