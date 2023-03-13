@@ -6,9 +6,6 @@
 #include <string>
 #include <iomanip>
 #include <Button.h>
-#include <Door.h>
-#include <Display.h>
-#include <AudioSystem.h>
 #include <Passenger.h>
 
 
@@ -32,9 +29,9 @@ class Elevator {
         int getcurrweight();
 
 		//other
-        void ringbell();
+        string ringbell();
 		void stop();//stay at currflr
-		void move(string direction);//moves the elevator in a direction supplied, up or down
+        string move(string direction);//moves the elevator in a direction supplied, up or down
 		void alarm(string safetyissue);//alarm is raised with a safety issue
 
 		void atnewflr(int flrnum);//floor sensor sends the elevator its new floor, probably change this to be simpler
@@ -48,8 +45,8 @@ class Elevator {
 		void rmvPassengers();//when passenger walks off
 
 
-        void closeDoor();
-        void openDoor();
+        string closeDoor();
+        string openDoor();
         bool checkidle();
         void setidle(bool ismoving);
         void setsafetymsg(string msg);
@@ -66,8 +63,6 @@ class Elevator {
         bool isidle;
 		
         string safetymsg;//gets set to the safety message given from ecs
-
-		Door* door;
 
 		Button* openBtn;
 		Button* closeBtn;

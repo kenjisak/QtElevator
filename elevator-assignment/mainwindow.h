@@ -3,9 +3,6 @@
 
 #include <QMainWindow>
 #include <ElevatorControlSystem.h>
-#include <Door.h>
-#include <Floor.h>
-#include <QThread>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

@@ -16,10 +16,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    AudioSystem.cpp \
     Button.cpp \
-    Display.cpp \
-    Door.cpp \
     Elevator.cpp \
     ElevatorControlSystem.cpp \
     Floor.cpp \
@@ -28,10 +25,7 @@ SOURCES += \
     mainwindow.cpp
 
 HEADERS += \
-    AudioSystem.h \
     Button.h \
-    Display.h \
-    Door.h \
     Elevator.h \
     ElevatorControlSystem.h \
     Floor.h \

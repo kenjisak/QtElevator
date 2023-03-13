@@ -47,7 +47,7 @@ int ElevatorControlSystem::flrreq(string direction,int serveflrnum){//when an up
 //            }
 //        }
 //    }
-    for(int i = 0; i < numofelevs;i++){//go through and find an idle elevator
+    for(int i = 0; i < numofelevs;i++){//go through and find an idle elevator this section is the alloc strategy of alloc a elev to a floor
         if (elevators[i]->checkidle() == true){
             idleelevnum = i;
             break;
@@ -69,27 +69,30 @@ int ElevatorControlSystem::flrreq(string direction,int serveflrnum){//when an up
     }
 }
 
-bool ElevatorControlSystem::safetyreq(string safetyissue){
+string ElevatorControlSystem::safetyreq(string safetyissue){
+    string returnallactions = "";
     int safefloor = 1;
-    if (safetyissue == "fire" || "power out"){
+    if (safetyissue == "fire" || "powerout"){
         //send all elevators to floor 1 as safe floor
         //send safety messages to elevator to update its display and audio
         //once elevators reached safe floor return true
+        //so it only plays once but doesnt show for each elev but tis still updated
+        returnallactions += "\nDisplay: Theres a " + safetyissue + " in the building, please disembark the elevator once the elevators reach the main floor.";
+        returnallactions += "\nAudio: Theres a " + safetyissue + " in the building, please disembark the elevator once the elevators reach the main floor.";
 
         for(int i = 0; i < numofelevs;i++){//go through and make all elevators move to safe floor
             elevators[i]->setsafetymsg("Theres a " + safetyissue + " in the building, please disembark the elevator once the elevators reach the main floor.");
             while (safefloor != elevators[i]->getcurrflrnum()){//make the elevator move up or down until it reaches the safe floor
                 if(elevators[i]->getcurrflrnum() < i){// if the elevator is on a floor below the safe floor
-                    elevators[i]->move("up");
+                    returnallactions += elevators[i]->move("up");
                 }else{// if the elevator is on a floor above the safe floor
-                    elevators[i]->move("down");
+                    returnallactions += elevators[i]->move("down");
                 }
             }
             //once there open it rings and opens its doors
-            elevators[i]->openDoor();
-        }
 
-        return true;//all elevators reached safe floor
+            returnallactions += elevators[i]->openDoor();
+        }
     }
-    return false;
+    return returnallactions;//return all appended actions instead
 }

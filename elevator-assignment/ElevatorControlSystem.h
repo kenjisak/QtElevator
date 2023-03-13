@@ -28,7 +28,7 @@ class ElevatorControlSystem {
 		void atnewflr(int flrnum, int elevnum);
 		void elevreq(int destflrnum,int elevnum);
         void elevsafetyreq(string safetyissue, int elevnum);
-        bool safetyreq(string safetyissue);
+        string safetyreq(string safetyissue);
 
 		void timestrat();//implement time alloc strat. this will be set as the currstrat from init of ecs until ordered to changed and use the other strat functions instead
 		void opportunisticstrat();//implement opportunistic alloc strat

@@ -11,7 +11,6 @@ Elevator::Elevator(const int& elevnum, const int& maxweight, const int& flrnum){
     this->isidle = true;
     this->safetymsg = "";
 
-    this->door = new Door();
     this->openBtn = new Button("open");
     this->closeBtn = new Button("close");
     this->helpBtn = new Button("help");
@@ -31,7 +30,6 @@ Elevator::Elevator(const int& elevnum, const int& maxweight, const int& flrnum){
 }
 
 Elevator::~Elevator(){
-    delete door;
     delete openBtn;
     delete closeBtn;
     delete helpBtn;
@@ -48,14 +46,6 @@ Elevator::~Elevator(){
 
 int Elevator::getElevNum(){
     return elevnum;
-}
-
-void Elevator::closeDoor(){
-    door->close();
-}
-
-void Elevator::openDoor(){
-    door->open();
 }
 
 bool Elevator::checkidle(){
@@ -78,15 +68,30 @@ void Elevator::setsafetymsg(string msg){
     safetymsg = msg;
 }
 
-void Elevator::move(string direction){
+string Elevator::move(string direction){
     if (direction == "up"){
         currflrnum += 1;//commanded to move up by 1 floor
     }else{
         currflrnum -= 1;//commanded to move down by 1 floor
     }
+    display = "\nDisplay: Floor " + to_string(currflrnum) + safetymsg;//updates its display with safetymessage if there is any
+    audioSys += "\nAudio: *" + safetymsg + "*";//if there is any to play.
+    return "\nCar " + to_string(elevnum) + " Display: Floor " + to_string(currflrnum); //shows updated movement
+}
+//have a check for if alarm is on then return audio, maybe
+string Elevator::closeDoor(){
+    return ringbell() + "\nCar " + to_string(elevnum) + " Closed its Door.";
+}
 
-    display = to_string(currflrnum) + safetymsg;//updates its display with safetymessage if there is any
-    audioSys += safetymsg;//if there is any to play.
+string Elevator::openDoor(){
+    string returnthis = "";
+    returnthis += ringbell() + "\nCar " + to_string(elevnum) + " Opened its Door for 5s.";
+    returnthis += ringbell() + "\nCar " + to_string(elevnum) + " Closed its Door.";
+    return returnthis;
+}
+
+string Elevator::ringbell(){
+    return "\nCar " + to_string(elevnum) + " Bell Rings.";
 }
 
 

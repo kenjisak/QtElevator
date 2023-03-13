@@ -60,21 +60,18 @@ void MainWindow::on_startSimBtn_clicked()
 void MainWindow::on_closeBtn_clicked()
 {
     QString elevnuminput = ui->elevNumDropDown->currentText();
-    this->ecs->getelevarr()[elevnuminput.toInt()-1]->closeDoor();
-    ui->outputBox->append("Elevator " + elevnuminput + " Door is now Closed.");
+    ui->outputBox->append(QString::fromStdString(this->ecs->getelevarr()[elevnuminput.toInt()-1]->closeDoor()));
 }
 
 void MainWindow::on_openBtn_clicked()
 {
     QString elevnuminput = ui->elevNumDropDown->currentText();
-    this->ecs->getelevarr()[elevnuminput.toInt()-1]->openDoor();
-    ui->outputBox->append("Elevator " + elevnuminput + " Door is now Open.");
+    ui->outputBox->append(QString::fromStdString(this->ecs->getelevarr()[elevnuminput.toInt()-1]->openDoor()));
 }
 
 void MainWindow::on_upBtn_clicked()
 {
     QString flrnuminput = ui->flrNumDropDown->currentText();
-//    this->ecs->getflrarr()[flrnuminput.toInt()]->getUpBtn()->press(); makes an error
     ui->outputBox->append("Floor " + flrnuminput + " Up Btn pressed(light on)");
 
     int elevnumsent = this->ecs->flrreq("up",flrnuminput.toInt());//sends a req to ecs to send an elevator to the given floor
@@ -146,13 +143,10 @@ void MainWindow::on_fireBtn_clicked()
     //once returned true, append showing all elevators at main floor: elev 1 at floor 1, elev 2 at floor 2
 
     ui->outputBox->append("======Fire Safety Actived=======");
-    ui->outputBox->append("All Elevators Displays and Plays audio of these messages: ");
-    ui->outputBox->append("Display: Theres a fire in the building, please disembark the elevator once the elevators reach the main floor.");
-    ui->outputBox->append("Audio System: *Theres a fire in the building, please disembark the elevator once the elevators reach the main floor.*");
 
-    if(this->ecs->safetyreq("fire")){
-         ui->outputBox->append("All Elevators have safely reached the main floor");
-    }
+    ui->outputBox->append(QString::fromStdString(this->ecs->safetyreq("fire")));
+    ui->outputBox->append("All Elevators have safely reached the main floor");
+
 }
 
 void MainWindow::on_pwroutBtn_clicked()
@@ -162,7 +156,7 @@ void MainWindow::on_pwroutBtn_clicked()
     ui->outputBox->append("Display: Theres a power out in the building, please disembark the elevator once the elevators reach the main floor.");
     ui->outputBox->append("Audio System: *Theres a power out in the building, please disembark the elevator once the elevators reach the main floor.*");
 
-    if(this->ecs->safetyreq("powerout")){
-         ui->outputBox->append("All Elevators have safely reached the main floor");
-    }
+    ui->outputBox->append(QString::fromStdString(this->ecs->safetyreq("powerout")));
+    ui->outputBox->append("All Elevators have safely reached the main floor");
+
 }
