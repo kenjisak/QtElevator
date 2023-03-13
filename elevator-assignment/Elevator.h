@@ -25,10 +25,10 @@ class Elevator {
 		~Elevator();
 
 		//getters
-		string getElevNum();
-		string getcurrflrnum();
-		string getmaxweight();
-		string getdestflrnum();
+        int getElevNum();
+        int getcurrflrnum();
+        int getmaxweight();
+        int getdestflrnum();
 
 
 		//other
@@ -47,6 +47,11 @@ class Elevator {
 		void addPassengers();//when passenger walks in
 		void rmvPassengers();//when passenger walks off
 
+
+        void closeDoor();
+        void openDoor();
+        bool checkidle();
+
 	private:
         int elevnum;
 		int currflrnum;
@@ -55,7 +60,7 @@ class Elevator {
 		int destflrnum;
 		int flrcount;
 
-		bool isnotmoving; 
+        bool isidle;
 		
 		string alarmmode;//gets set to the safetyissue that was sent from helpBtn,fireBtn, or sensors
 

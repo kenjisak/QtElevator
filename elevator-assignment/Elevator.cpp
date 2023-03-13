@@ -5,9 +5,9 @@ Elevator::Elevator(const int& elevnum, const int& maxweight, const int& flrnum){
     this->currflrnum = 1;
     this->maxweight = maxweight;
     this->maxcapacity = 5;
-    this->destflrnum = NULL;
+    this->destflrnum = 0;
     this->flrcount = flrnum;
-    this->isnotmoving = true;
+    this->isidle = true;
     this->alarmmode = "";
 
     this->door = new Door();
@@ -23,8 +23,9 @@ Elevator::Elevator(const int& elevnum, const int& maxweight, const int& flrnum){
         this->passengers[i] = NULL;//when adding and removing passengers, maybe just copy the object into this array?
     }
 
+    destBtns = new Button*[flrnum];
     for (int i = 0;i < flrnum;i++){
-        this->destBtns[i] = new Button(to_string(i+1));
+        destBtns[i] = new Button(to_string(i+1));
     }
 }
 
@@ -44,4 +45,20 @@ Elevator::~Elevator(){
     for (int i = 0;i < flrcount;i++){
         delete destBtns[i];
     }
+}
+
+int Elevator::getElevNum(){
+    return elevnum;
+}
+
+void Elevator::closeDoor(){
+    door->close();
+}
+
+void Elevator::openDoor(){
+    door->open();
+}
+
+bool Elevator::checkidle(){
+    return isidle;
 }

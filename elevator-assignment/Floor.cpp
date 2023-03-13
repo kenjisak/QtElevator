@@ -13,9 +13,6 @@ Floor::Floor(const int& name){
 Floor::~Floor(){
     delete upBtn;
     delete downBtn;
-    for (int i = 1;i <= 5;i++){
-        delete passengers[i];
-    }
     delete this;
 }
 
