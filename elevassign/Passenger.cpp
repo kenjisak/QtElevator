@@ -16,15 +16,3 @@ int Passenger::getNum(){
 int Passenger::getWeight(){
     return weight;
 }
-
-void Passenger::walk(string direction,int elevnum){
-    
-}
-
-void Passenger::press(int destflrnum){
-    
-}
-
-void Passenger::press(string btn){
-    
-}

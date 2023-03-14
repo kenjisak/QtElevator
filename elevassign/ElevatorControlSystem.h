@@ -31,6 +31,8 @@ class ElevatorControlSystem {
         string elevsafetyreq(string safetyissue, int elevnum);
         string safetyreq(string safetyissue);
 
+        string passwalkin(int passnum, int elevnum);
+
 		void timestrat();//implement time alloc strat. this will be set as the currstrat from init of ecs until ordered to changed and use the other strat functions instead
 		void opportunisticstrat();//implement opportunistic alloc strat
 

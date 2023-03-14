@@ -40,9 +40,6 @@ class Elevator {
 		void notify(int destflrnum);//gets notified from teh buttons what destination floor button has been pressed
 		void ecsrequest(string msg);//receives what ever request, mainly a safety message to relay and play/display through its audiosys and display
 
-		void addPassengers();//when passenger walks in
-		void rmvPassengers();//when passenger walks off
-
         string ringbell();
         string closeDoor();
         string openDoor();
@@ -52,6 +49,9 @@ class Elevator {
         void setsafetymsg(string msg);
         string interruptclose();//when light sensor detects an obstacle, this gets activated to stop the close() of its doors
         string displayandplaysafetymsg();
+
+        void addPassengers(int passweight);//when passenger walks in
+        void rmvPassengers(int passweight);//when passenger walks off
 
 	private:
         int elevnum;

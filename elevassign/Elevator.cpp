@@ -59,6 +59,9 @@ int Elevator::getcurrflrnum(){
 int Elevator::getcurrweight(){
     return currweight;
 }
+int Elevator::getmaxweight(){
+    return maxweight;
+}
 
 void Elevator::setsafetymsg(string msg){
     safetymsg = msg;
@@ -113,4 +116,10 @@ string Elevator::displayandplaysafetymsg(){
     return display + audioSys;//else play audio and display
 }
 
+void Elevator::addPassengers(int passweight){
+    currweight += passweight;//updates elev weight to add in passenger
+}
 
+void Elevator::rmvPassengers(int passweight){
+    currweight -= passweight;//updates elev weight to remove passenger
+}

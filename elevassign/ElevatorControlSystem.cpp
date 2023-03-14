@@ -76,11 +76,13 @@ string ElevatorControlSystem::flrreq(string direction,int serveflrnum,int passnu
         returnallactions += "\nCar " + to_string(elevators[idleelevnum]->getElevNum()) + " has arrived.";
         returnallactions += "\nFloor " + to_string(serveflrnum) + " " + direction + " button off.";
         returnallactions += elevators[idleelevnum]->openDoor();//change to only opens door, and closes door here after passenger walks in
-        //have givenpassenger walk into elevator here elev[idle].addpassenger(pass[passgiven - 1].getweight),return is string that given passenger walked into elev
-        //update elev selected dropdown to the elevator that arrived
-        //update currweight of elev selected
+
+        returnallactions += passwalkin(passnum - 1,idleelevnum);//pass walks in and this has an overload check
+
         returnallactions += elevators[idleelevnum]->closeDoor();
-    }else{//else we didnt find an elevator so just return -1
+        elevators[idleelevnum]->setidle(true);//set it back to idle as its not moving anymore
+
+    }else{//else we didnt find an elevator all are in use atm
         returnallactions += "\nFloor " + to_string(serveflrnum) + " " + direction + " button off.";
         returnallactions += "\nAll Elevators in Use.";
 
@@ -131,6 +133,21 @@ string ElevatorControlSystem::elevsafetyreq(string safetyissue, int elevnum){
             elevators[elevnum]->setsafetymsg("");//resets safetymsg
         }
 
+    }
+    if(safetyissue == "overload"){
+        returnallactions += "\n========Overload Activated=========";
+        returnallactions += "\nPassenger walks out of Car " + to_string(elevnum);
+    }
+    return returnallactions;
+}
+
+string ElevatorControlSystem::passwalkin(int passnum, int elevnum){
+    //else trigger overload safety which general Passenger walks out and return that message
+    string returnallactions = "\nPassenger " + to_string(passnum + 1) + " walks into Car " + to_string(elevators[elevnum]->getElevNum());
+    if ((passengers[passnum]->getWeight() + elevators[elevnum]->getcurrweight()) <= elevators[elevnum]->getmaxweight()){//if passenger wont overload the elevator
+        elevators[elevnum]->addPassengers(passengers[passnum]->getWeight());//need to manually click off and click back to the elev pass is in to see the currweight change
+    }else{
+        returnallactions += elevsafetyreq("overload",elevnum + 1);
     }
     return returnallactions;
 }
