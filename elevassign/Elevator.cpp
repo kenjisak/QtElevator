@@ -82,11 +82,8 @@ string Elevator::closeDoor(){
 }
 
 string Elevator::openDoor(){
-    string returnthis = "";
-    returnthis += ringbell() + "\nCar " + to_string(elevnum) + " Opened its Door for 5s.";
-    //add a delay here
-    returnthis += closeDoor();
-    return returnthis;
+    //add a delay?
+    return ringbell() + "\nCar " + to_string(elevnum) + " Opened its Door for 5s.";
 }
 
 string Elevator::holdOpenDoor(){
@@ -102,6 +99,7 @@ string Elevator::interruptclose(){
     returnthis += ringbell() + "\nCar " + to_string(elevnum) + " Closing its Door.";
     returnthis += "\nCar " + to_string(elevnum) + " Obstacle in the Way.";
     returnthis += openDoor();
+    returnthis += closeDoor();
     return returnthis;
 }
 

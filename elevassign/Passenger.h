@@ -12,13 +12,13 @@ class Passenger {
 		
 	public:
 		//constructor
-		Passenger(const string& name, const int& weight);
+        Passenger(const int& number, const int& weight);
 
 		//destructor
 		~Passenger();
 
 		//getters
-		string getName();
+        int getNum();
 		int getWeight();
 		
 		//other
@@ -27,7 +27,7 @@ class Passenger {
 		void press(string btn);//passenger press a up or down, hold open or close door, help or fire buttons
 		
 	private:
-		string name;
+        int number;
         int weight;
 };
 #endif

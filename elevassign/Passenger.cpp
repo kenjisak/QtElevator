@@ -1,7 +1,7 @@
 #include "Passenger.h"
 
-Passenger::Passenger(const string& name,const int& weight){
-    this->name = name;
+Passenger::Passenger(const int& number,const int& weight){
+    this->number = number;
     this->weight = weight;
 }
 
@@ -9,8 +9,8 @@ Passenger::~Passenger(){
     delete this;
 }
 
-string Passenger::getName(){
-    return name;
+int Passenger::getNum(){
+    return number;
 }
 
 int Passenger::getWeight(){

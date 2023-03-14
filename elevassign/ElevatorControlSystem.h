@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <Elevator.h>
 #include <Floor.h>
+#include <Passenger.h>
 
 using namespace std;
 
@@ -13,7 +14,7 @@ class ElevatorControlSystem {
 		
 	public:
 		//constructor
-		ElevatorControlSystem(const int& elevnum,const int& flrnum,const int& maxweight);
+        ElevatorControlSystem(const int& elevnum,const int& flrnum,const int& maxweight,const int& passnum);
 
 		//destructor
 		~ElevatorControlSystem();
@@ -24,7 +25,7 @@ class ElevatorControlSystem {
         Elevator** getelevarr();
 
 		//other
-        string flrreq(string direction,int serveflrnum);
+        string flrreq(string direction,int serveflrnum,int passnum);
 		void atnewflr(int flrnum, int elevnum);
 		void elevreq(int destflrnum,int elevnum);
         string elevsafetyreq(string safetyissue, int elevnum);
@@ -38,6 +39,8 @@ class ElevatorControlSystem {
 		string currstrat;
 		Elevator** elevators;
         Floor** floors;
+        Passenger** passengers;
+
         int numofelevs;
         int numofflrs;
         int obstaclecount;

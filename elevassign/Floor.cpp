@@ -4,10 +4,6 @@ Floor::Floor(const int& name){
     this->flrnum = name;
     this->upBtn = new Button("up");
     this->downBtn = new Button("down");
-
-    for (int i = 0;i < 5;i++){
-        this->passengers[i] = new Passenger("pass" + to_string(i),100);
-    }
 }
 
 Floor::~Floor(){

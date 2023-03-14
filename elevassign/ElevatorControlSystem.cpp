@@ -1,6 +1,6 @@
 #include "ElevatorControlSystem.h"
 
-ElevatorControlSystem::ElevatorControlSystem(const int& elevnum,const int& flrnum,const int& maxweight){
+ElevatorControlSystem::ElevatorControlSystem(const int& elevnum,const int& flrnum,const int& maxweight,const int& passnum){
 
     this->numofflrs = flrnum;
     this->numofelevs = elevnum;
@@ -14,6 +14,11 @@ ElevatorControlSystem::ElevatorControlSystem(const int& elevnum,const int& flrnu
     elevators = new Elevator*[elevnum];
     for (int i = 0;i < elevnum;i++){
         elevators[i] = new Elevator(i+1,maxweight,flrnum);
+    }
+
+    passengers = new Passenger*[passnum];
+    for (int i = 0;i < passnum;i++){
+        passengers[i] = new Passenger(i+1,100);//default of 100 lbs per passenger
     }
 }
 
@@ -29,7 +34,7 @@ Elevator** ElevatorControlSystem::getelevarr(){
     return elevators;
 }
 
-string ElevatorControlSystem::flrreq(string direction,int serveflrnum){//when an up or down button from the floor is pressed, this finds an elev and sends it there
+string ElevatorControlSystem::flrreq(string direction,int serveflrnum,int passnum){//when an up or down button from the floor is pressed, this finds an elev and sends it there
     //if up then find a non moving elev and make it move to the serveflrnum
 
     //go through and find an idle elevator thats possibly on the same floor already
@@ -50,7 +55,7 @@ string ElevatorControlSystem::flrreq(string direction,int serveflrnum){//when an
     string returnallactions = "";
     int idleelevnum = -1;//init so if no idle elevator found theyre all in use atm
 
-    returnallactions += "\nFloor " + to_string(serveflrnum) + " " + direction + " button pressed and lit.";
+    returnallactions += "\nFloor " + to_string(serveflrnum) + " " + direction + " button pressed by Passenger " + to_string(passnum) + " and lit.";
     for(int i = 0; i < numofelevs;i++){//go through and find an idle elevator this section is the alloc strategy of alloc a elev to a floor
         if (elevators[i]->checkidle() == true){
             idleelevnum = i;
@@ -70,8 +75,11 @@ string ElevatorControlSystem::flrreq(string direction,int serveflrnum){//when an
 
         returnallactions += "\nCar " + to_string(elevators[idleelevnum]->getElevNum()) + " has arrived.";
         returnallactions += "\nFloor " + to_string(serveflrnum) + " " + direction + " button off.";
-        returnallactions += elevators[idleelevnum]->openDoor();
-
+        returnallactions += elevators[idleelevnum]->openDoor();//change to only opens door, and closes door here after passenger walks in
+        //have givenpassenger walk into elevator here elev[idle].addpassenger(pass[passgiven - 1].getweight),return is string that given passenger walked into elev
+        //update elev selected dropdown to the elevator that arrived
+        //update currweight of elev selected
+        returnallactions += elevators[idleelevnum]->closeDoor();
     }else{//else we didnt find an elevator so just return -1
         returnallactions += "\nFloor " + to_string(serveflrnum) + " " + direction + " button off.";
         returnallactions += "\nAll Elevators in Use.";

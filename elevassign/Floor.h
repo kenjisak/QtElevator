@@ -6,9 +6,7 @@
 #include <string>
 #include <iomanip>
 
-#include <Passenger.h>
 #include <Button.h>
-#include <vector>
 
 using namespace std;
 
@@ -37,6 +35,5 @@ class Floor {
 		int flrnum;
 		Button* upBtn;
 		Button* downBtn;
-        Passenger* passengers[5];
 };
 #endif
