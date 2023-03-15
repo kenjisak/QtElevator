@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>736</width>
-    <height>613</height>
+    <width>728</width>
+    <height>545</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,108 +15,7 @@
   </property>
   <widget class="QWidget" name="allWidgets">
    <layout class="QGridLayout" name="gridLayout_7">
-    <item row="0" column="2">
-     <widget class="QFrame" name="flrPanel">
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_4">
-       <item row="2" column="1">
-        <widget class="QPushButton" name="downBtn">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>Down</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QPushButton" name="upBtn">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>Up</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="flrNumLabel">
-         <property name="text">
-          <string>Floor #</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QComboBox" name="flrNumDropDown"/>
-       </item>
-       <item row="0" column="0" colspan="2">
-        <widget class="QLabel" name="flrPanelLabel">
-         <property name="text">
-          <string>Floor Panel</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="3" column="0">
-     <widget class="QFrame" name="simPanel">
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_3">
-       <item row="1" column="0">
-        <widget class="QLabel" name="numElevsLabel">
-         <property name="text">
-          <string>Elevators</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLineEdit" name="flrNuminit"/>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLineEdit" name="elevNuminit"/>
-       </item>
-       <item row="3" column="1">
-        <widget class="QPushButton" name="startSimBtn">
-         <property name="text">
-          <string>Start Simulation</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="numFlrsLabel">
-         <property name="text">
-          <string>Floors</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="numPassLabel">
-         <property name="text">
-          <string>Passengers</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLineEdit" name="passNuminit"/>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="0" column="0" rowspan="3" colspan="2">
+    <item row="0" column="0" rowspan="5" colspan="2">
      <widget class="QGroupBox" name="outputPanel">
       <property name="title">
        <string>Application Output</string>
@@ -142,7 +41,7 @@ p, li { white-space: pre-wrap; }
       </layout>
      </widget>
     </item>
-    <item row="3" column="2">
+    <item row="5" column="2">
      <widget class="QFrame" name="safetyPanel">
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -194,7 +93,68 @@ p, li { white-space: pre-wrap; }
       </layout>
      </widget>
     </item>
-    <item row="3" column="1">
+    <item row="5" column="0">
+     <widget class="QFrame" name="simPanel">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="1" column="0">
+        <widget class="QLabel" name="numElevsLabel">
+         <property name="text">
+          <string>Elevators</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="flrNuminit">
+         <property name="text">
+          <string>5</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="elevNuminit">
+         <property name="text">
+          <string>2</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QPushButton" name="startSimBtn">
+         <property name="text">
+          <string>Start Simulation</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="numFlrsLabel">
+         <property name="text">
+          <string>Floors</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="numPassLabel">
+         <property name="text">
+          <string>Passengers</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="passNuminit">
+         <property name="text">
+          <string>3</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="5" column="1">
      <widget class="QFrame" name="weightPanel">
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -237,7 +197,39 @@ p, li { white-space: pre-wrap; }
       </layout>
      </widget>
     </item>
-    <item row="1" column="2" rowspan="2">
+    <item row="2" column="2" rowspan="2">
+     <widget class="QFrame" name="passPanel">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_8">
+       <item row="0" column="0" colspan="2">
+        <widget class="QLabel" name="passPanelLabel">
+         <property name="text">
+          <string>Passenger Panel</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="passNumLabel">
+         <property name="text">
+          <string>Passenger #</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QComboBox" name="passNumDropDown"/>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="4" column="2">
      <widget class="QFrame" name="elevatorPanel">
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -246,14 +238,34 @@ p, li { white-space: pre-wrap; }
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="2" column="0">
+       <item row="1" column="0">
         <widget class="QLabel" name="elevNumLabel">
          <property name="text">
           <string>Elevator #</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="0">
+       <item row="1" column="1">
+        <widget class="QComboBox" name="elevNumDropDown"/>
+       </item>
+       <item row="4" column="1">
+        <widget class="QPushButton" name="closeBtn">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Close</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="flrNumLabel_2">
+         <property name="text">
+          <string>Floor #</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
         <widget class="QPushButton" name="pushBtn">
          <property name="enabled">
           <bool>false</bool>
@@ -263,8 +275,15 @@ p, li { white-space: pre-wrap; }
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
-        <widget class="QComboBox" name="passNumDropDown"/>
+       <item row="4" column="0">
+        <widget class="QPushButton" name="openBtn">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Open</string>
+         </property>
+        </widget>
        </item>
        <item row="0" column="0" colspan="2">
         <widget class="QLabel" name="elevPanelLabel">
@@ -277,52 +296,67 @@ p, li { white-space: pre-wrap; }
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QComboBox" name="elevNumDropDown"/>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="flrNumLabel_2">
-         <property name="text">
-          <string>Floor #</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QPushButton" name="openBtn">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>Open</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
         <widget class="QComboBox" name="flrNumDropDown_2"/>
        </item>
-       <item row="5" column="1">
-        <widget class="QPushButton" name="closeBtn">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="text">
-          <string>Close</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="passNumLabel">
-         <property name="text">
-          <string>Passenger #</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
+       <item row="3" column="1">
         <widget class="QPushButton" name="helpBtn">
          <property name="enabled">
           <bool>false</bool>
          </property>
          <property name="text">
           <string>Help</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="1" column="2">
+     <widget class="QFrame" name="flrPanel">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_4">
+       <item row="1" column="1">
+        <widget class="QComboBox" name="flrNumDropDown"/>
+       </item>
+       <item row="2" column="1">
+        <widget class="QPushButton" name="downBtn">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Down</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QPushButton" name="upBtn">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>Up</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="flrNumLabel">
+         <property name="text">
+          <string>Floor #</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="2">
+        <widget class="QLabel" name="flrPanelLabel">
+         <property name="text">
+          <string>Floor Panel</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>

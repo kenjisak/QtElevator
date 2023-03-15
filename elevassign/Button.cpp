@@ -28,11 +28,6 @@ void Button::press(){
     illuminate(true);
 }
 
-void Button::hold(int numsecs){
-    //if its the open door button then prints open for 1-numsecs and closes the door
-
-}
-
 void Button::illuminate(bool status){
     light = status;
 }

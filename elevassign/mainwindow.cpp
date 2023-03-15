@@ -90,18 +90,26 @@ void MainWindow::on_openBtn_released()
 }
 void MainWindow::on_upBtn_clicked()
 {
-    QString flrnuminput = ui->flrNumDropDown->currentText();
-    QString passnuminput = ui->passNumDropDown->currentText();
-    ui->outputBox->append(QString::fromStdString(this->ecs->flrreq("up",flrnuminput.toInt(),passnuminput.toInt())));
+    int flrnuminput = ui->flrNumDropDown->currentText().toInt();
+    int passnuminput = ui->passNumDropDown->currentText().toInt();
+    ui->outputBox->append(QString::fromStdString(this->ecs->flrreq("up",flrnuminput,passnuminput)));
     //pass in the pointer of the the elev dropdown and currweight linedit to be able to edit inside of ecs
 }
 
 void MainWindow::on_downBtn_clicked()
 {
-    QString flrnuminput = ui->flrNumDropDown->currentText();
-    QString passnuminput = ui->passNumDropDown->currentText();
-    ui->outputBox->append(QString::fromStdString(this->ecs->flrreq("down",flrnuminput.toInt(),passnuminput.toInt())));
+    int flrnuminput = ui->flrNumDropDown->currentText().toInt();
+    int passnuminput = ui->passNumDropDown->currentText().toInt();
+    ui->outputBox->append(QString::fromStdString(this->ecs->flrreq("down",flrnuminput,passnuminput)));
     //pass in the pointer of the the elev dropdown and currweight linedit to be able to edit inside of ecs
+}
+
+void MainWindow::on_pushBtn_clicked()/////test
+{
+    int destflrnuminput = ui->flrNumDropDown_2->currentText().toInt();
+    int elevnuminput = ui->elevNumDropDown->currentText().toInt();
+    int passnuminput = ui->passNumDropDown->currentText().toInt();
+    ui->outputBox->append(QString::fromStdString(this->ecs->elevreq(destflrnuminput,elevnuminput,passnuminput)));
 }
 
 void MainWindow::on_flrNumDropDown_currentTextChanged(const QString &flrnum)
