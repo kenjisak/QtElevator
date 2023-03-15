@@ -125,7 +125,7 @@ string ElevatorControlSystem::passwalkin(int passnum, int elevnum){
 
 string ElevatorControlSystem::passwalkout(int passnum, int elevnum, int destflrnum){
     string allactions = "\nPassenger " + to_string(passnum) + " walks onto Floor " + to_string(destflrnum);
-    elevators[elevnum - 1]->rmvPassengers(passengers[passnum]->getWeight());//removes weight of pass from elevator
+    elevators[elevnum - 1]->rmvPassengers(passengers[passnum - 1]->getWeight());//removes weight of pass from elevator
     return allactions;
 }
 
@@ -142,6 +142,7 @@ string ElevatorControlSystem::safetyreq(string safetyissue){
 
         for(int i = 0; i < numofelevs;i++){//go through and make all elevators move to safe floor
             elevators[i]->setsafetymsg("Theres a " + safetyissue + " in the building, please disembark the elevator once the elevators reach the main floor.");
+            allactions += "\nCar " + to_string(elevators[i]->getElevNum()) + " Display: Floor " + to_string(elevators[i]->getcurrflrnum());
             while (safefloor != elevators[i]->getcurrflrnum()){//make the elevator move up or down until it reaches the safe floor
                 if(elevators[i]->getcurrflrnum() < i){// if the elevator is on a floor below the safe floor
                     allactions += elevators[i]->move("up");
@@ -183,6 +184,7 @@ string ElevatorControlSystem::elevsafetyreq(string safetyissue, int elevnum){
 
 
 //to do*******
+//add display current floor in safety req for all elevators
 //add pass pushes destflr button line in elevreq function
 /*add pass num pressed open,close door buttons
  * implement overload and help buttons
