@@ -31,9 +31,8 @@ class ElevatorControlSystem {
         string passwalkin(int passnum, int elevnum);
         string passwalkout(int passnum, int elevnum, int destflrnum);
 
-		void timestrat();//implement time alloc strat. this will be set as the currstrat from init of ecs until ordered to changed and use the other strat functions instead
-		void opportunisticstrat();//implement opportunistic alloc strat
-
+        int timedependentstrat(int currtime);//based on time of day, morning(7:30 - 8:30) will prioritize main floor (1)
+        int elevcenteredstrat(int serveflrnum);//send the closes idle elev to the floor
 
 	private:
 		string currstrat;

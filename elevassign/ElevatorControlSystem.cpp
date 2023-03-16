@@ -70,14 +70,6 @@ string ElevatorControlSystem::flrreq(string direction,int serveflrnum,int passnu
 
 string ElevatorControlSystem::elevreq(int destflrnum, int elevnum, int passnum){
     string allactions = "";
-    //set elev idle false
-    //passnum pressed floor destflr button in car elevnum
-    //move elevnum to destflr
-    //open doors
-    //passwalksout
-    //closedoors
-    //set elev idle true
-    //elevnum/passnum = 1,2(-1 to get pos in arr)
 
     allactions += "\nPassenger " + to_string(passnum) + " pressed Floor " + to_string(destflrnum) + " button in Car " + to_string(elevnum);
     elevators[elevnum - 1]->setidle(false);//elevator is no longer idle and is moving/serving a passenger
@@ -179,6 +171,18 @@ string ElevatorControlSystem::elevsafetyreq(string safetyissue, int elevnum){
  * figure out how to update selected elev and currweight when passenger walks into elev
  */
 
+
+int ElevatorControlSystem::elevcenteredstrat(int serveflrnum){
+    int currclosestelev = 0;
+    int elevnum = -1;
+    /* to do
+     * find a idle elev, if elevnum is still -1, then all elev are in use and return elevnum instead,
+     * else find the closest idle elev
+     *      if currelev is idle and currelev.getcurrflrnum - serveflrnum(elev 1 on flr 1 - flr 1 = 0) < currclosestelev.getcurrflrnum then set it to currclosest elev
+     *      return currclosestelev
+     */
+    return -1;
+}
 //go through and find an idle elevator thats possibly on the same floor already
 //    for(int i = 0; i < numofelevs;i++){
 //        if (elevators[i]->checkidle() == true && elevators[i]->getcurrflrnum() == serveflrnum){
