@@ -11,32 +11,17 @@ Elevator::Elevator(const int& elevnum, const int& maxweight, const int& flrnum){
     this->isidle = true;
     this->safetymsg = "";
 
-    this->helpBtn = new Button("help");
-    this->fireBtn = new Button("fire");
-
     this->display = "";
     this->audioSys = "";
 
     for (int i = 0;i < 5;i++){
         this->passengers[i] = NULL;//when adding and removing passengers, maybe just copy the object into this array?
     }
-
-    destBtns = new Button*[flrnum];
-    for (int i = 0;i < flrnum;i++){
-        destBtns[i] = new Button(to_string(i+1));
-    }
 }
 
 Elevator::~Elevator(){
-    delete helpBtn;
-    delete fireBtn;
-
     for (int i = 0;i < 5;i++){
         delete passengers[i];
-    }
-
-    for (int i = 0;i < flrcount;i++){
-        delete destBtns[i];
     }
 }
 

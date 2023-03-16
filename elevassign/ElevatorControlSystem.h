@@ -5,7 +5,6 @@
 #include <string>
 #include <iomanip>
 #include <Elevator.h>
-#include <Floor.h>
 #include <Passenger.h>
 
 using namespace std;
@@ -21,7 +20,6 @@ class ElevatorControlSystem {
 
 		//getters
 		string getcurrstrat();
-        Floor** getflrarr();
         Elevator** getelevarr();
 
 		//other
@@ -41,7 +39,6 @@ class ElevatorControlSystem {
 	private:
 		string currstrat;
 		Elevator** elevators;
-        Floor** floors;
         Passenger** passengers;
 
         int numofelevs;

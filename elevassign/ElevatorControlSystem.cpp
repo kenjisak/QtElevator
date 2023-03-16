@@ -6,11 +6,6 @@ ElevatorControlSystem::ElevatorControlSystem(const int& elevnum,const int& flrnu
     this->numofelevs = elevnum;
     obstaclecount = 0;
 
-    floors = new Floor*[flrnum];
-    for (int i = 0;i < flrnum;i++){
-        floors[i] = new Floor(i+1);
-    }
-
     elevators = new Elevator*[elevnum];
     for (int i = 0;i < elevnum;i++){
         elevators[i] = new Elevator(i+1,maxweight,flrnum);
@@ -26,16 +21,12 @@ ElevatorControlSystem::~ElevatorControlSystem(){
     delete this;
 }
 
-Floor** ElevatorControlSystem::getflrarr(){
-    return floors;
-}
-
 Elevator** ElevatorControlSystem::getelevarr(){
     return elevators;
 }
 
 string ElevatorControlSystem::flrreq(string direction,int serveflrnum,int passnum){//when an up or down button from the floor is pressed, this finds an elev and sends it there
-    //if up then find a non moving elev and make it move to the serveflrnum
+    //find an idle elev and make it move to the serveflrnum
     string allactions = "";
     int idleelevnum = -1;//init so if no idle elevator found theyre all in use atm
 
