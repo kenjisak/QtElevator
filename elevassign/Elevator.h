@@ -5,7 +5,6 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
-#include <Button.h>
 #include <Passenger.h>
 
 
@@ -29,17 +28,7 @@ class Elevator {
         int getcurrweight();
 
 		//other
-
-		void stop();//stay at currflr
         string move(string direction);//moves the elevator in a direction supplied, up or down
-		void alarm(string safetyissue);//alarm is raised with a safety issue
-
-		void atnewflr(int flrnum);//floor sensor sends the elevator its new floor, probably change this to be simpler
-		void detectflr(int flrnum);//floor sensor that detects the floor
-		void detectissue(string safetyissue);//safety sensors that detects whatever issue arises
-		void notify(int destflrnum);//gets notified from teh buttons what destination floor button has been pressed
-		void ecsrequest(string msg);//receives what ever request, mainly a safety message to relay and play/display through its audiosys and display
-
         string ringbell();
         string closeDoor();
         string openDoor();
@@ -56,7 +45,7 @@ class Elevator {
 	private:
         int elevnum;
 		int currflrnum;
-		int maxweight;//given by user input
+        int maxweight;
         int currweight;
 		int maxcapacity;
 		int destflrnum;
@@ -65,15 +54,7 @@ class Elevator {
         bool isidle;
 		
         string safetymsg;//gets set to the safety message given from ecs
-
-		Button* helpBtn;
-		Button* fireBtn;
-
-		Button** destBtns;
-
         string display;
         string audioSys;
-
-        Passenger* passengers[MAXCAPACITY];//change to array of ints of pass, passengers = [1,2,3]
 };
 #endif

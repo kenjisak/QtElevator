@@ -13,16 +13,10 @@ Elevator::Elevator(const int& elevnum, const int& maxweight, const int& flrnum){
 
     this->display = "";
     this->audioSys = "";
-
-    for (int i = 0;i < 5;i++){
-        this->passengers[i] = NULL;//when adding and removing passengers, maybe just copy the object into this array?
-    }
 }
 
 Elevator::~Elevator(){
-    for (int i = 0;i < 5;i++){
-        delete passengers[i];
-    }
+    delete this;
 }
 
 int Elevator::getElevNum(){

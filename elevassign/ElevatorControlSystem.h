@@ -24,7 +24,6 @@ class ElevatorControlSystem {
 
 		//other
         string flrreq(string direction,int serveflrnum,int passnum);
-        void atnewflr(int flrnum, int elevnum);//prob dont need this too complex
         string elevreq(int destflrnum,int elevnum,int passnum);
         string elevsafetyreq(string safetyissue, int elevnum);//safety issue in a single elev
         string safetyreq(string safetyissue);//safety issue with all elevs

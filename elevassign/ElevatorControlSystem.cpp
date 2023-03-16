@@ -176,7 +176,6 @@ string ElevatorControlSystem::elevsafetyreq(string safetyissue, int elevnum){
 /* to do*******
  * implement overload and help buttons
  * implement allocstrat function, 1 being closest idle elev to the serveflrnum
- * clean up code, rmv not needed files(button, floor)
  * figure out how to update selected elev and currweight when passenger walks into elev
  */
 
