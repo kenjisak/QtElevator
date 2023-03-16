@@ -201,9 +201,9 @@
         </widget>
        </item>
        <item row="2" column="0">
-        <widget class="QLabel" name="flrNumLabel_2">
+        <widget class="QLabel" name="destflrNumLabel">
          <property name="text">
-          <string>Floor #</string>
+          <string>Destination Floor #</string>
          </property>
         </widget>
        </item>
@@ -238,7 +238,7 @@
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QComboBox" name="flrNumDropDown_2"/>
+        <widget class="QComboBox" name="destflrNumDropDown"/>
        </item>
        <item row="3" column="1">
         <widget class="QPushButton" name="helpBtn">

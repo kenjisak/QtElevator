@@ -39,7 +39,7 @@ string ElevatorControlSystem::flrreq(string direction,int serveflrnum,int passnu
     string allactions = "";
     int idleelevnum = -1;//init so if no idle elevator found theyre all in use atm
 
-    allactions += "\nFloor " + to_string(serveflrnum) + " " + direction + " button pressed by Passenger " + to_string(passnum) + " and lit.";
+    allactions += "\nPassenger "  + to_string(passnum) + " pressed Floor " + to_string(serveflrnum) + " " + direction + " button and lit.";
     for(int i = 0; i < numofelevs;i++){//go through and find an idle elevator this section is the alloc strategy of alloc a elev to a floor
         if (elevators[i]->checkidle() == true){
             idleelevnum = i;
@@ -88,6 +88,7 @@ string ElevatorControlSystem::elevreq(int destflrnum, int elevnum, int passnum){
     //set elev idle true
     //elevnum/passnum = 1,2(-1 to get pos in arr)
 
+    allactions += "\nPassenger " + to_string(passnum) + " pressed Floor " + to_string(destflrnum) + " button in Car " + to_string(elevnum);
     elevators[elevnum - 1]->setidle(false);//elevator is no longer idle and is moving/serving a passenger
     allactions += "\nCar " + to_string(elevnum) + " Display: Floor " + to_string(elevators[elevnum - 1]->getcurrflrnum());
     while (destflrnum != elevators[elevnum - 1]->getcurrflrnum()){//make the elevator move up or down until it reaches the dest floor
@@ -133,7 +134,7 @@ string ElevatorControlSystem::safetyreq(string safetyissue){
     string allactions = "";
     int safefloor = 1;
     if (safetyissue == "fire" || "powerout"){
-        //send all elevators to floor 1 as safe floor
+        //send all elevators to safe floor set
         //send safety messages to elevator to update its display and audio
         //once elevators reached safe floor return true
         //so it only plays once but doesnt show for each elev but is still updated
@@ -181,21 +182,12 @@ string ElevatorControlSystem::elevsafetyreq(string safetyissue, int elevnum){
     return allactions;
 }
 
-
-
-//to do*******
-//add display current floor in safety req for all elevators
-//add pass pushes destflr button line in elevreq function
-/*add pass num pressed open,close door buttons
+/* to do*******
  * implement overload and help buttons
  * implement allocstrat function, 1 being closest idle elev to the serveflrnum
  * clean up code, rmv not needed files(button, floor)
  * figure out how to update selected elev and currweight when passenger walks into elev
  */
-
-
-
-
 
 //go through and find an idle elevator thats possibly on the same floor already
 //    for(int i = 0; i < numofelevs;i++){

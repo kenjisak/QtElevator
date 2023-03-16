@@ -33,7 +33,7 @@ void MainWindow::on_startSimBtn_clicked()
 
         for (int i = 0;i < flrnuminput.toInt();i++){
             ui->flrNumDropDown->addItem(QString::number(i+1));
-            ui->flrNumDropDown_2->addItem(QString::number(i+1));
+            ui->destflrNumDropDown->addItem(QString::number(i+1));
         }
 
         for (int i = 0;i < elevnuminput.toInt();i++){
@@ -67,31 +67,41 @@ void MainWindow::on_startSimBtn_clicked()
 
 void MainWindow::on_closeBtn_clicked()
 {
-    QString elevnuminput = ui->elevNumDropDown->currentText();
+    int elevnuminput = ui->elevNumDropDown->currentText().toInt();
     QString passnuminput = ui->passNumDropDown->currentText();
-    ui->outputBox->append(QString::fromStdString(this->ecs->getelevarr()[elevnuminput.toInt()-1]->closeDoor()));
+
+    QString allactions = "\nPassenger " + passnuminput + " pressed close door button in Car " + QString::number(elevnuminput);//selected passenger pressed close door in selected car
+    allactions += QString::fromStdString(this->ecs->getelevarr()[elevnuminput - 1]->closeDoor());//close door in selected elev
+
+    ui->outputBox->append(allactions);
 }
 
-//void MainWindow::on_openBtn_clicked()
-//{
-//    QString elevnuminput = ui->elevNumDropDown->currentText();
-//    ui->outputBox->append(QString::fromStdString(this->ecs->getelevarr()[elevnuminput.toInt()-1]->openDoor()));
-//}
 void MainWindow::on_openBtn_pressed()
 {
-    QString elevnuminput = ui->elevNumDropDown->currentText();
-    ui->outputBox->append(QString::fromStdString(this->ecs->getelevarr()[elevnuminput.toInt()-1]->holdOpenDoor()));
+    int elevnuminput = ui->elevNumDropDown->currentText().toInt();
+    QString passnuminput = ui->passNumDropDown->currentText();
+
+    QString allactions = "\nPassenger " + passnuminput + " pressed open door button in Car " + QString::number(elevnuminput);//selected passenger pressed open door in selected car
+    allactions += QString::fromStdString(this->ecs->getelevarr()[elevnuminput - 1]->holdOpenDoor());//open door in selected elev
+
+    ui->outputBox->append(allactions);
 }
 
 void MainWindow::on_openBtn_released()
 {
-    QString elevnuminput = ui->elevNumDropDown->currentText();
-    ui->outputBox->append(QString::fromStdString(this->ecs->getelevarr()[elevnuminput.toInt()-1]->closeDoor()));
+    int elevnuminput = ui->elevNumDropDown->currentText().toInt();
+    QString passnuminput = ui->passNumDropDown->currentText();
+
+    QString allactions = "\nPassenger " + passnuminput + " released open door button in Car " + QString::number(elevnuminput);//selected passenger released open door in selected car
+    allactions += QString::fromStdString(this->ecs->getelevarr()[elevnuminput - 1]->closeDoor());//close door in selected elev
+
+    ui->outputBox->append(allactions);
 }
 void MainWindow::on_upBtn_clicked()
 {
     int flrnuminput = ui->flrNumDropDown->currentText().toInt();
     int passnuminput = ui->passNumDropDown->currentText().toInt();
+
     ui->outputBox->append(QString::fromStdString(this->ecs->flrreq("up",flrnuminput,passnuminput)));
     //pass in the pointer of the the elev dropdown and currweight linedit to be able to edit inside of ecs
 }
@@ -100,15 +110,17 @@ void MainWindow::on_downBtn_clicked()
 {
     int flrnuminput = ui->flrNumDropDown->currentText().toInt();
     int passnuminput = ui->passNumDropDown->currentText().toInt();
+
     ui->outputBox->append(QString::fromStdString(this->ecs->flrreq("down",flrnuminput,passnuminput)));
     //pass in the pointer of the the elev dropdown and currweight linedit to be able to edit inside of ecs
 }
 
 void MainWindow::on_pushBtn_clicked()/////test
 {
-    int destflrnuminput = ui->flrNumDropDown_2->currentText().toInt();
+    int destflrnuminput = ui->destflrNumDropDown->currentText().toInt();
     int elevnuminput = ui->elevNumDropDown->currentText().toInt();
     int passnuminput = ui->passNumDropDown->currentText().toInt();
+
     ui->outputBox->append(QString::fromStdString(this->ecs->elevreq(destflrnuminput,elevnuminput,passnuminput)));
 }
 
@@ -130,17 +142,12 @@ void MainWindow::on_flrNumDropDown_currentTextChanged(const QString &flrnum)
 }
 
 void MainWindow::on_elevNumDropDown_currentTextChanged(const QString &elevnum)
-{
+{//find a better way to always update
     ui->currlbsInput->setText(QString::number(this->ecs->getelevarr()[elevnum.toInt()-1]->getcurrweight()));
 }
 
 void MainWindow::on_fireBtn_clicked()
 {
-    //append fire safety activated
-    //append these are the messages shown in each elevator
-    //append Display: Theres a fire in the building, please disembark the elevator once the elevators reach the main floor.
-    //append Audio System: *Theres a fire in the building, please disembark the elevator once the elevators reach the main floor.*
-
     ui->outputBox->append("\n======Fire Safety Actived=======");
     ui->outputBox->append("All Elevators Displays and Plays audio of these messages: ");
 

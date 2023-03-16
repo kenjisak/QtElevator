@@ -21,7 +21,6 @@ private slots:
 
     void on_closeBtn_clicked();
 
-//    void on_openBtn_clicked();
     void on_openBtn_pressed();
 
     void on_openBtn_released();

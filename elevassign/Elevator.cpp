@@ -77,6 +77,10 @@ string Elevator::move(string direction){
     return "\nCar " + to_string(elevnum) + " Display: Floor " + to_string(currflrnum); //shows updated movement
 }
 
+string Elevator::ringbell(){
+    return "\nCar " + to_string(elevnum) + " Bell Rings.";
+}
+
 string Elevator::closeDoor(){
     string returnthis = ringbell() + "\nCar " + to_string(elevnum) + " Closing its Door.";
 //    add delay to interrupt closing?
@@ -91,10 +95,6 @@ string Elevator::openDoor(){
 
 string Elevator::holdOpenDoor(){
     return ringbell() + "\nCar " + to_string(elevnum) + " held Open its Door";
-}
-
-string Elevator::ringbell(){
-    return "\nCar " + to_string(elevnum) + " Bell Rings.";
 }
 
 string Elevator::interruptclose(){
