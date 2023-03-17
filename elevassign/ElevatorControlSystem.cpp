@@ -26,18 +26,12 @@ Elevator** ElevatorControlSystem::getelevarr(){
 }
 
 string ElevatorControlSystem::flrreq(string direction,int serveflrnum,int passnum){//when an up or down button from the floor is pressed, this finds an elev and sends it there
-    //find an idle elev and make it move to the serveflrnum
     string allactions = "";
-    int idleelevnum = -1;//init so if no idle elevator found theyre all in use atm
-
     allactions += "\nPassenger "  + to_string(passnum) + " pressed Floor " + to_string(serveflrnum) + " " + direction + " button and lit.";
-    for(int i = 0; i < numofelevs;i++){//go through and find an idle elevator this section is the alloc strategy of alloc a elev to a floor
-        if (elevators[i]->checkidle() == true){
-            idleelevnum = i;
-            break;
-        }
-    }
-    //another alloc strat would be finding idle elevator thats closest to the serveflrnum, ex. servelfr = 2, elev 1 is at flr 1, elev 2 is at flr 5, send elev 1
+
+    // add currstrat check here
+    int idleelevnum = elevcenteredstrat(serveflrnum);
+    //alloc strat would be finding idle elevator thats closest to the serveflrnum, ex. servelfr = 2, elev 1 is at flr 1, elev 2 is at flr 5, send elev 1
 
     if (idleelevnum != -1){ // if an elevator is found
         elevators[idleelevnum]->setidle(false);//elevator is no longer idle and is moving/serving a passenger
@@ -57,7 +51,7 @@ string ElevatorControlSystem::flrreq(string direction,int serveflrnum,int passnu
         allactions += passwalkin(passnum,idleelevnum);//pass walks in and this has an overload check
 
         allactions += elevators[idleelevnum]->closeDoor();
-        elevators[idleelevnum]->setidle(true);//set it back to idle as its not moving anymore
+//        elevators[idleelevnum]->setidle(true);//set it back to idle as its not moving anymore
         //might have to remove/change to show all elevators in use case.
 
     }else{//else we didnt find an elevator all are in use atm
@@ -162,39 +156,38 @@ string ElevatorControlSystem::elevsafetyreq(string safetyissue, int elevnum){
         allactions += "\n========Overload Activated=========";
         allactions += "\nPassenger walks out of Car " + to_string(elevnum);
     }
+    if(safetyissue == "help"){
+
+    }
     return allactions;
+}
+
+int ElevatorControlSystem::elevcenteredstrat(int serveflrnum){
+    int idleelevnum = -1;
+    for(int i = 0; i < numofelevs;i++){//inits and checks if theres an idle elev
+        if (elevators[i]->checkidle() == true){
+            idleelevnum = i;
+            break;
+        }
+    }
+
+    if (idleelevnum == -1){// if no idle elev found, all are in use
+        return idleelevnum;
+    }
+    //else there is an idle elevator and we init it as the closest one,
+    for(int i = 0; i < numofelevs;i++){//finds closest elevator, goes through again and checks if its idle AND closer than the current closest idle elevator
+        if (elevators[i]->checkidle() == true && abs(elevators[i]->getcurrflrnum() - serveflrnum) < abs(elevators[idleelevnum]->getcurrflrnum() - serveflrnum)){
+            idleelevnum = i;
+        }
+    }
+
+    return idleelevnum;
 }
 
 /* to do*******
  * implement overload and help buttons
- * implement allocstrat function, 1 being closest idle elev to the serveflrnum
- * figure out how to update selected elev and currweight when passenger walks into elev
+ * implement time allocstrat on flr req, add another param for current time, so if morning, lunch, or 5-6(done work)
+ * add checks for currelevstrat set, if its in the times above, then use time strat, else, use elev center
+ * figure out how to update selected elev and currweight when passenger walks into elev (last)
  */
 
-
-int ElevatorControlSystem::elevcenteredstrat(int serveflrnum){
-    int currclosestelev = 0;
-    int elevnum = -1;
-    /* to do
-     * find a idle elev, if elevnum is still -1, then all elev are in use and return elevnum instead,
-     * else find the closest idle elev
-     *      if currelev is idle and currelev.getcurrflrnum - serveflrnum(elev 1 on flr 1 - flr 1 = 0) < currclosestelev.getcurrflrnum then set it to currclosest elev
-     *      return currclosestelev
-     */
-    return -1;
-}
-//go through and find an idle elevator thats possibly on the same floor already
-//    for(int i = 0; i < numofelevs;i++){
-//        if (elevators[i]->checkidle() == true && elevators[i]->getcurrflrnum() == serveflrnum){
-//            idleelevnum = i;
-//            break;
-//        }
-//    }
-//    if(idleelevnum == -1){ //if elevator not found then find any idle elevator
-//        for(int i = 0; i < numofelevs;i++){
-//            if (elevators[i]->checkidle() == true){
-//                idleelevnum = i;
-//                break;
-//            }
-//        }
-//    }
