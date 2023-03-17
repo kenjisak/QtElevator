@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QTimer>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -62,6 +63,12 @@ void MainWindow::on_startSimBtn_clicked()
         ui->overldBtn->setEnabled(true);
         ui->pwroutBtn->setEnabled(true);
         ui->doorBlockBtn->setEnabled(true);
+
+//        QTimer* timer = new QTimer(this);
+//        connect(timer,&QTimer::timeout,this,[&](){
+//            ui->currtimeEdit->setTime(QTime::currentTime());
+//        });
+//        timer->start(1000); //this chunk syncs the current time by seconds, but not needed as wont be able to edit the time
     }
 }
 
@@ -115,7 +122,7 @@ void MainWindow::on_downBtn_clicked()
     //pass in the pointer of the the elev dropdown and currweight linedit to be able to edit inside of ecs
 }
 
-void MainWindow::on_pushBtn_clicked()/////test
+void MainWindow::on_pushBtn_clicked()
 {
     int destflrnuminput = ui->destflrNumDropDown->currentText().toInt();
     int elevnuminput = ui->elevNumDropDown->currentText().toInt();
@@ -167,7 +174,7 @@ void MainWindow::on_doorBlockBtn_clicked()
 {
     ui->outputBox->append("\n======Door Block Safety Actived=======");
 
-    ui->outputBox->append(QString::fromStdString(this->ecs->elevsafetyreq("obstacle",0)));//set to just trigger the first elevator
+    ui->outputBox->append(QString::fromStdString(this->ecs->elevsafetyreq("obstacle",0,-1)));//set to just trigger the first elevator
 
 }
 
@@ -177,4 +184,12 @@ void MainWindow::on_overldBtn_clicked()
     int heavypass = ui->passNuminit->text().toInt();//num of passengers, is the last pos in pass array we init as the heavy passenger for this case
 
     ui->outputBox->append(QString::fromStdString(this->ecs->flrreq("up",flrnuminput,heavypass + 1)));
+}
+
+void MainWindow::on_helpBtn_clicked()
+{
+    int elevnuminput = ui->elevNumDropDown->currentText().toInt();
+    int passnuminput = ui->passNumDropDown->currentText().toInt();
+
+    ui->outputBox->append(QString::fromStdString(this->ecs->elevsafetyreq("help",elevnuminput,passnuminput)));
 }

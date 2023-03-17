@@ -1,4 +1,6 @@
 #include "ElevatorControlSystem.h"
+#include <cstdlib>
+#include <ctime>
 
 ElevatorControlSystem::ElevatorControlSystem(const int& elevnum,const int& flrnum,const int& maxweight,const int& passnum){
 
@@ -16,7 +18,7 @@ ElevatorControlSystem::ElevatorControlSystem(const int& elevnum,const int& flrnu
     for (int i = 0;i < passnum;i++){
         passengers[i] = new Passenger(i+1,100);//default of 100 lbs per passenger
     }
-    passengers[passnum] = new Passenger(passnum,10000);//heavy passenger for overload btn case
+    passengers[passnum] = new Passenger(passnum,10000000);//heavy passenger for overload btn case
 }
 
 ElevatorControlSystem::~ElevatorControlSystem(){
@@ -53,7 +55,7 @@ string ElevatorControlSystem::flrreq(string direction,int serveflrnum,int passnu
         allactions += passwalkin(passnum,idleelevnum);//pass walks in and this has an overload check
 
         allactions += elevators[idleelevnum]->closeDoor();
-        elevators[idleelevnum]->setidle(true);//set it back to idle as its not moving anymore
+//        elevators[idleelevnum]->setidle(true);//set it back to idle as its not moving anymore
         //might have to remove/change to show all elevators in use case.
 
     }else{//else we didnt find an elevator all are in use atm
@@ -97,7 +99,7 @@ string ElevatorControlSystem::passwalkin(int passnum, int elevnum){
         elevators[elevnum]->addPassengers(passengers[passnum - 1]->getWeight());//need to manually click off and click back to the elev pass is in to see the currweight change
         //(when have extra time) update the currweight label, and selected elevator, might be able to get away with just the elevator selected?
     }else{
-        allactions += elevsafetyreq("overload",elevnum);//fixed
+        allactions += elevsafetyreq("overload",elevnum,passnum);//fixed
     }
     return allactions;
 }
@@ -139,7 +141,7 @@ string ElevatorControlSystem::safetyreq(string safetyissue){
     return allactions;//return all appended actions instead
 }
 
-string ElevatorControlSystem::elevsafetyreq(string safetyissue, int elevnum){
+string ElevatorControlSystem::elevsafetyreq(string safetyissue, int elevnum, int passnum){
     string allactions = "";
     if(safetyissue == "obstacle"){
         obstaclecount += 1;
@@ -158,12 +160,42 @@ string ElevatorControlSystem::elevsafetyreq(string safetyissue, int elevnum){
         elevators[elevnum]->setsafetymsg("Theres a " + safetyissue + " in carrying weight. Please reduce the load.");
         allactions += elevators[elevnum]->displayandplaysafetymsg();
         elevators[elevnum]->setsafetymsg("");//resets safetymsg
-        allactions += "\nPassenger walks out of Car " + to_string(elevnum + 1);
+        allactions += "\nPassenger " + to_string(passnum) + "walks out of Car " + to_string(elevnum + 1);
     }
     if(safetyissue == "help"){
-
+        allactions += "\n========Help Activated=========";
+        allactions += bssconnection(elevnum,passnum);
     }
     return allactions;
+}
+
+string ElevatorControlSystem::bssconnection(int elevnum, int passnum){
+    string allactions = "";
+    allactions += "\nCar " + to_string(elevnum) + " Connected to Building Safety Services.";
+    allactions += "\nWaiting for response for 5s from BSS and Passenger " + to_string(passnum);
+
+    srand(time(NULL));
+    int bssresponse = rand() % 2;
+    int passresponse = rand() % 2;
+
+    if (bssresponse == 0 && passresponse == 0){
+        allactions += "\nNo response from Building Safety Services and Passenger " + to_string(passnum);
+        allactions += call911(elevnum);
+    }else if(passresponse == 0){//bss responds but pass doesnt
+        allactions += "\nNo response from Passenger " + to_string(passnum);
+        allactions += call911(elevnum);
+    }else if(bssresponse == 0){//pass responds but bss doesnt
+        allactions += "\nNo response from Building Safety Services.";
+        allactions += call911(elevnum);
+    }else{
+        allactions += "\nBoth Building Safety Services and Passenger responded and are communicating.";
+    }
+
+    return allactions;
+}
+
+string ElevatorControlSystem::call911(int elevnum){
+    return "\nCalling 911 for Car " + to_string(elevnum);
 }
 
 int ElevatorControlSystem::elevcenteredstrat(int serveflrnum){
@@ -189,9 +221,7 @@ int ElevatorControlSystem::elevcenteredstrat(int serveflrnum){
 }
 
 /* to do*******
- * implement overload and help buttons
- * implement time allocstrat on flr req, add another param for current time, so if morning, lunch, or 5-6(done work)
+ * implement time allocstrat on flr req, add another param for current time, so if morning/lunch/rush hour 5-6
  * add checks for currelevstrat set, if its in the times above, then use time strat, else, use elev center
  * figure out how to update selected elev and currweight when passenger walks into elev (last)
  */
-
