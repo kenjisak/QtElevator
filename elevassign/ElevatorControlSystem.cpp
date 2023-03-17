@@ -27,21 +27,12 @@ Elevator** ElevatorControlSystem::getelevarr(){
     return elevators;
 }
 
-string ElevatorControlSystem::flrreq(string direction,int serveflrnum,int passnum, QTime currenttime){//when an up or down button from the floor is pressed, this finds an elev and sends it there
+string ElevatorControlSystem::flrreq(string direction,int serveflrnum,int passnum, QTime currenttime, QComboBox* elevdropdown, QLineEdit* currweightdisplay){//when an up or down button from the floor is pressed, this finds an elev and sends it there
     string allactions = "";
     int idleelevnum;
     allactions += "\nPassenger "  + to_string(passnum) + " pressed Floor " + to_string(serveflrnum) + " " + direction + " button and lit.";
 
-    if(currenttime.hour() >= 7 && currenttime.hour() <= 8){//morning rush if 7 - 8:59 am,
-        currstrat = "elevcentered";
-    }else if(currenttime.hour() >= 12 && currenttime.hour() <= 13){//lunch rush if 12 - 1:59 pm,
-        currstrat = "elevcentered";
-    }else if(currenttime.hour() >= 16 && currenttime.hour() <= 17){//evening rush if 4 - 6:59 pm
-        currstrat = "elevcentered";
-    }else{//non rush hour time
-        currstrat = "loadbalance";
-    }
-
+    decideallocstrat(currenttime);
 
     if (currstrat == "loadbalance"){    //any other time use load balancing for better maintenance for moving parts in the long run
         allactions += "\nLoad Balance Strategy is used as its normal hours.";
@@ -69,6 +60,12 @@ string ElevatorControlSystem::flrreq(string direction,int serveflrnum,int passnu
 
         allactions += passwalkin(passnum,idleelevnum);//pass walks in and this has an overload check
 
+        //update elev dropdown and curr weight
+        elevdropdown->setCurrentIndex(idleelevnum);
+        QString updatedweight = QString::number(elevators[idleelevnum]->getcurrweight());
+        currweightdisplay->setText(updatedweight);
+
+
         allactions += elevators[idleelevnum]->closeDoor();
         elevators[idleelevnum]->setidle(true);//set it back to idle as its not moving anymore
         //might have to remove/change to show all elevators in use case.
@@ -81,7 +78,7 @@ string ElevatorControlSystem::flrreq(string direction,int serveflrnum,int passnu
     return allactions;
 }
 
-string ElevatorControlSystem::elevreq(int destflrnum, int elevnum, int passnum){
+string ElevatorControlSystem::elevreq(int destflrnum, int elevnum, int passnum,QLineEdit* currweightdisplay){
     string allactions = "";
 
     allactions += "\nPassenger " + to_string(passnum) + " pressed Floor " + to_string(destflrnum) + " button in Car " + to_string(elevnum);
@@ -99,6 +96,9 @@ string ElevatorControlSystem::elevreq(int destflrnum, int elevnum, int passnum){
     allactions += elevators[elevnum - 1]->openDoor();//change to only opens door, and closes door here after passenger walks in
 
     allactions += passwalkout(passnum,elevnum,destflrnum);//pass walks out
+    //update just currweight, since elev is already selected
+    QString updatedweight = QString::number(elevators[elevnum - 1]->getcurrweight());
+    currweightdisplay->setText(updatedweight);
 
     allactions += elevators[elevnum - 1]->closeDoor();
     elevators[elevnum - 1]->setidle(true);//set it back to idle as its not moving anymore
@@ -213,6 +213,19 @@ string ElevatorControlSystem::call911(int elevnum){
     return "\nCalling 911 for Car " + to_string(elevnum);
 }
 
+
+void ElevatorControlSystem::decideallocstrat(QTime currenttime){
+    if(currenttime.hour() >= 7 && currenttime.hour() <= 8){//morning rush if 7 - 8:59 am,
+        currstrat = "elevcentered";
+    }else if(currenttime.hour() >= 12 && currenttime.hour() <= 13){//lunch rush if 12 - 1:59 pm,
+        currstrat = "elevcentered";
+    }else if(currenttime.hour() >= 16 && currenttime.hour() <= 17){//evening rush if 4 - 6:59 pm
+        currstrat = "elevcentered";
+    }else{//non rush hour time
+        currstrat = "loadbalance";
+    }
+}
+
 int ElevatorControlSystem::elevcenteredstrat(int serveflrnum){
     int idleelevnum = -1;
     for(int i = 0; i < numofelevs;i++){//inits and checks if theres an idle elev
@@ -234,7 +247,7 @@ int ElevatorControlSystem::elevcenteredstrat(int serveflrnum){
 
     return idleelevnum;
 }
-//load balancing instead?
+
 int ElevatorControlSystem::loadbalancestrat(){
     int idleelevnum = -1;
     for(int i = 0; i < numofelevs;i++){//inits and checks if theres an idle elev
@@ -256,10 +269,6 @@ int ElevatorControlSystem::loadbalancestrat(){
 
     return idleelevnum;
 }
-/*
- * if elev is idle but currweight < idle with lesser weight, then send the less weight elevator
- */
+
 /* to do*******
- * have pass talk in its class
- * figure out how to update selected elev and currweight when passenger walks into elev (last)
  */

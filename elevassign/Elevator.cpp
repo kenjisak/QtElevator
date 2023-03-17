@@ -100,5 +100,7 @@ void Elevator::addPassengers(int passweight){
 }
 
 void Elevator::rmvPassengers(int passweight){
-    currweight -= passweight;//updates elev weight to remove passenger
+    if (currweight != 0){
+        currweight -= passweight;//updates elev weight to remove passenger
+    }
 }

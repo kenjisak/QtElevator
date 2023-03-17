@@ -109,8 +109,10 @@ void MainWindow::on_upBtn_clicked()
     int flrnuminput = ui->flrNumDropDown->currentText().toInt();
     int passnuminput = ui->passNumDropDown->currentText().toInt();
     QTime currenttime = ui->currtimeEdit->time();
+    QComboBox* elevdropdown = ui->elevNumDropDown;
+    QLineEdit* currweightdisplay = ui->currlbsInput;
 
-    ui->outputBox->append(QString::fromStdString(this->ecs->flrreq("up",flrnuminput,passnuminput,currenttime)));
+    ui->outputBox->append(QString::fromStdString(this->ecs->flrreq("up",flrnuminput,passnuminput,currenttime,elevdropdown,currweightdisplay)));
     //pass in the pointer of the the elev dropdown and currweight linedit to be able to edit inside of ecs
 }
 
@@ -119,8 +121,10 @@ void MainWindow::on_downBtn_clicked()
     int flrnuminput = ui->flrNumDropDown->currentText().toInt();
     int passnuminput = ui->passNumDropDown->currentText().toInt();
     QTime currenttime = ui->currtimeEdit->time();
+    QComboBox* elevdropdown = ui->elevNumDropDown;
+    QLineEdit* currweightdisplay = ui->currlbsInput;
 
-    ui->outputBox->append(QString::fromStdString(this->ecs->flrreq("down",flrnuminput,passnuminput,currenttime)));
+    ui->outputBox->append(QString::fromStdString(this->ecs->flrreq("down",flrnuminput,passnuminput,currenttime,elevdropdown,currweightdisplay)));
     //pass in the pointer of the the elev dropdown and currweight linedit to be able to edit inside of ecs
 }
 
@@ -129,8 +133,9 @@ void MainWindow::on_pushBtn_clicked()
     int destflrnuminput = ui->destflrNumDropDown->currentText().toInt();
     int elevnuminput = ui->elevNumDropDown->currentText().toInt();
     int passnuminput = ui->passNumDropDown->currentText().toInt();
+        QLineEdit* currweightdisplay = ui->currlbsInput;
 
-    ui->outputBox->append(QString::fromStdString(this->ecs->elevreq(destflrnuminput,elevnuminput,passnuminput)));
+    ui->outputBox->append(QString::fromStdString(this->ecs->elevreq(destflrnuminput,elevnuminput,passnuminput,currweightdisplay)));
 }
 
 void MainWindow::on_flrNumDropDown_currentTextChanged(const QString &flrnum)
@@ -185,8 +190,10 @@ void MainWindow::on_overldBtn_clicked()
     int flrnuminput = ui->flrNumDropDown->currentText().toInt();
     int heavypass = ui->passNuminit->text().toInt();//num of passengers, is the last pos in pass array we init as the heavy passenger for this case
     QTime currenttime = ui->currtimeEdit->time();
+    QComboBox* elevdropdown = ui->elevNumDropDown;
+    QLineEdit* currweightdisplay = ui->currlbsInput;
 
-    ui->outputBox->append(QString::fromStdString(this->ecs->flrreq("up",flrnuminput,heavypass + 1,currenttime)));
+    ui->outputBox->append(QString::fromStdString(this->ecs->flrreq("up",flrnuminput,heavypass + 1,currenttime,elevdropdown,currweightdisplay)));
 }
 
 void MainWindow::on_helpBtn_clicked()

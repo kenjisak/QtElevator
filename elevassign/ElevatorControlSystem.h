@@ -24,8 +24,8 @@ class ElevatorControlSystem {
         Elevator** getelevarr();
 
         //other
-        string flrreq(string direction,int serveflrnum,int passnum, QTime currenttime);
-        string elevreq(int destflrnum,int elevnum,int passnum);
+        string flrreq(string direction,int serveflrnum,int passnum, QTime currenttime, QComboBox* elevdropdown, QLineEdit* currweightdisplay);
+        string elevreq(int destflrnum,int elevnum,int passnum,QLineEdit* currweightdisplay);
         string elevsafetyreq(string safetyissue, int elevnum, int passnum);//safety issue in a single elev
         string safetyreq(string safetyissue);//safety issue with all elevs
 
@@ -35,6 +35,7 @@ class ElevatorControlSystem {
         string passwalkin(int passnum, int elevnum);
         string passwalkout(int passnum, int elevnum, int destflrnum);
 
+        void decideallocstrat(QTime currenttime);//sets currstrat based on time of day,rush hour or normal hours
         int elevcenteredstrat(int serveflrnum);//send the closes idle elev to the floor
         int loadbalancestrat();//distributes load between idle elevators
 
