@@ -43,6 +43,8 @@ private slots:
 
     void on_pushBtn_clicked();
 
+    void on_overldBtn_clicked();
+
 private:
     Ui::MainWindow *ui;
     ElevatorControlSystem* ecs;

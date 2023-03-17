@@ -41,6 +41,7 @@ class ElevatorControlSystem {
 
         int numofelevs;
         int numofflrs;
+        int numofpass;
         int obstaclecount;
 };
 #endif

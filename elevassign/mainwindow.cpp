@@ -170,3 +170,11 @@ void MainWindow::on_doorBlockBtn_clicked()
     ui->outputBox->append(QString::fromStdString(this->ecs->elevsafetyreq("obstacle",0)));//set to just trigger the first elevator
 
 }
+
+void MainWindow::on_overldBtn_clicked()
+{
+    int flrnuminput = ui->flrNumDropDown->currentText().toInt();
+    int heavypass = ui->passNuminit->text().toInt();//num of passengers, is the last pos in pass array we init as the heavy passenger for this case
+
+    ui->outputBox->append(QString::fromStdString(this->ecs->flrreq("up",flrnuminput,heavypass + 1)));
+}

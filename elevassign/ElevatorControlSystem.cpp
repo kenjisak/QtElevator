@@ -4,6 +4,7 @@ ElevatorControlSystem::ElevatorControlSystem(const int& elevnum,const int& flrnu
 
     this->numofflrs = flrnum;
     this->numofelevs = elevnum;
+    this->numofpass = passnum;
     obstaclecount = 0;
 
     elevators = new Elevator*[elevnum];
@@ -11,10 +12,11 @@ ElevatorControlSystem::ElevatorControlSystem(const int& elevnum,const int& flrnu
         elevators[i] = new Elevator(i+1,maxweight,flrnum);
     }
 
-    passengers = new Passenger*[passnum];
+    passengers = new Passenger*[passnum + 1];//needed to +1 for the heavy passenger otherwise mem corruption
     for (int i = 0;i < passnum;i++){
         passengers[i] = new Passenger(i+1,100);//default of 100 lbs per passenger
     }
+    passengers[passnum] = new Passenger(passnum,10000);//heavy passenger for overload btn case
 }
 
 ElevatorControlSystem::~ElevatorControlSystem(){
@@ -51,7 +53,7 @@ string ElevatorControlSystem::flrreq(string direction,int serveflrnum,int passnu
         allactions += passwalkin(passnum,idleelevnum);//pass walks in and this has an overload check
 
         allactions += elevators[idleelevnum]->closeDoor();
-//        elevators[idleelevnum]->setidle(true);//set it back to idle as its not moving anymore
+        elevators[idleelevnum]->setidle(true);//set it back to idle as its not moving anymore
         //might have to remove/change to show all elevators in use case.
 
     }else{//else we didnt find an elevator all are in use atm
@@ -95,8 +97,7 @@ string ElevatorControlSystem::passwalkin(int passnum, int elevnum){
         elevators[elevnum]->addPassengers(passengers[passnum - 1]->getWeight());//need to manually click off and click back to the elev pass is in to see the currweight change
         //(when have extra time) update the currweight label, and selected elevator, might be able to get away with just the elevator selected?
     }else{
-        allactions += elevsafetyreq("overload",elevnum + 1);
-        //overload button, have a passenger walk into the elevator with max weight being 0.
+        allactions += elevsafetyreq("overload",elevnum);//fixed
     }
     return allactions;
 }
@@ -154,7 +155,10 @@ string ElevatorControlSystem::elevsafetyreq(string safetyissue, int elevnum){
     }
     if(safetyissue == "overload"){
         allactions += "\n========Overload Activated=========";
-        allactions += "\nPassenger walks out of Car " + to_string(elevnum);
+        elevators[elevnum]->setsafetymsg("Theres a " + safetyissue + " in carrying weight. Please reduce the load.");
+        allactions += elevators[elevnum]->displayandplaysafetymsg();
+        elevators[elevnum]->setsafetymsg("");//resets safetymsg
+        allactions += "\nPassenger walks out of Car " + to_string(elevnum + 1);
     }
     if(safetyissue == "help"){
 

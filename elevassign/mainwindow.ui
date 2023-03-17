@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>720</width>
-    <height>597</height>
+    <height>599</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -383,7 +383,11 @@ p, li { white-space: pre-wrap; }
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QTimeEdit" name="currtimeEdit"/>
+        <widget class="QTimeEdit" name="currtimeEdit">
+         <property name="displayFormat">
+          <string>hh:mm AP</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
