@@ -1,6 +1,4 @@
 #include "ElevatorControlSystem.h"
-#include <cstdlib>
-#include <ctime>
 
 ElevatorControlSystem::ElevatorControlSystem(const int& elevnum,const int& flrnum,const int& maxweight,const int& passnum){
 
@@ -29,13 +27,30 @@ Elevator** ElevatorControlSystem::getelevarr(){
     return elevators;
 }
 
-string ElevatorControlSystem::flrreq(string direction,int serveflrnum,int passnum){//when an up or down button from the floor is pressed, this finds an elev and sends it there
+string ElevatorControlSystem::flrreq(string direction,int serveflrnum,int passnum, QTime currenttime){//when an up or down button from the floor is pressed, this finds an elev and sends it there
     string allactions = "";
+    int idleelevnum;
     allactions += "\nPassenger "  + to_string(passnum) + " pressed Floor " + to_string(serveflrnum) + " " + direction + " button and lit.";
 
-    // add currstrat check here
-    int idleelevnum = elevcenteredstrat(serveflrnum);
-    //alloc strat would be finding idle elevator thats closest to the serveflrnum, ex. servelfr = 2, elev 1 is at flr 1, elev 2 is at flr 5, send elev 1
+    if(currenttime.hour() >= 7 && currenttime.hour() <= 8){//morning rush if 7 - 8:59 am,
+        currstrat = "elevcentered";
+    }else if(currenttime.hour() >= 12 && currenttime.hour() <= 13){//lunch rush if 12 - 1:59 pm,
+        currstrat = "elevcentered";
+    }else if(currenttime.hour() >= 16 && currenttime.hour() <= 17){//evening rush if 4 - 6:59 pm
+        currstrat = "elevcentered";
+    }else{//non rush hour time
+        currstrat = "loadbalance";
+    }
+
+
+    if (currstrat == "loadbalance"){    //any other time use load balancing for better maintenance for moving parts in the long run
+        allactions += "\nLoad Balance Strategy is used as its normal hours.";
+        idleelevnum = loadbalancestrat();
+    }
+    if (currstrat == "elevcentered"){//during rush hours, use elevecentered as itd be faster in servicing
+        allactions += "\nElevator Centered Strategy is used as its rush hour.";
+        idleelevnum = elevcenteredstrat(serveflrnum);
+    }
 
     if (idleelevnum != -1){ // if an elevator is found
         elevators[idleelevnum]->setidle(false);//elevator is no longer idle and is moving/serving a passenger
@@ -55,7 +70,7 @@ string ElevatorControlSystem::flrreq(string direction,int serveflrnum,int passnu
         allactions += passwalkin(passnum,idleelevnum);//pass walks in and this has an overload check
 
         allactions += elevators[idleelevnum]->closeDoor();
-//        elevators[idleelevnum]->setidle(true);//set it back to idle as its not moving anymore
+        elevators[idleelevnum]->setidle(true);//set it back to idle as its not moving anymore
         //might have to remove/change to show all elevators in use case.
 
     }else{//else we didnt find an elevator all are in use atm
@@ -219,9 +234,32 @@ int ElevatorControlSystem::elevcenteredstrat(int serveflrnum){
 
     return idleelevnum;
 }
+//load balancing instead?
+int ElevatorControlSystem::loadbalancestrat(){
+    int idleelevnum = -1;
+    for(int i = 0; i < numofelevs;i++){//inits and checks if theres an idle elev
+        if (elevators[i]->checkidle() == true){
+            idleelevnum = i;
+            break;
+        }
+    }
 
+    if (idleelevnum == -1){// if no idle elev found, all are in use
+        return idleelevnum;
+    }
+    //else there is an idle elevator and we init it as the lowest load elev
+    for(int i = 0; i < numofelevs;i++){//finds lowest load elevator, goes through again and checks if its idle AND lower load than the current lowest load idle elevator
+        if (elevators[i]->checkidle() == true && elevators[i]->getcurrweight() < elevators[idleelevnum]->getcurrweight()){
+            idleelevnum = i;
+        }
+    }
+
+    return idleelevnum;
+}
+/*
+ * if elev is idle but currweight < idle with lesser weight, then send the less weight elevator
+ */
 /* to do*******
- * implement time allocstrat on flr req, add another param for current time, so if morning/lunch/rush hour 5-6
- * add checks for currelevstrat set, if its in the times above, then use time strat, else, use elev center
+ * have pass talk in its class
  * figure out how to update selected elev and currweight when passenger walks into elev (last)
  */

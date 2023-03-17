@@ -108,8 +108,9 @@ void MainWindow::on_upBtn_clicked()
 {
     int flrnuminput = ui->flrNumDropDown->currentText().toInt();
     int passnuminput = ui->passNumDropDown->currentText().toInt();
+    QTime currenttime = ui->currtimeEdit->time();
 
-    ui->outputBox->append(QString::fromStdString(this->ecs->flrreq("up",flrnuminput,passnuminput)));
+    ui->outputBox->append(QString::fromStdString(this->ecs->flrreq("up",flrnuminput,passnuminput,currenttime)));
     //pass in the pointer of the the elev dropdown and currweight linedit to be able to edit inside of ecs
 }
 
@@ -117,8 +118,9 @@ void MainWindow::on_downBtn_clicked()
 {
     int flrnuminput = ui->flrNumDropDown->currentText().toInt();
     int passnuminput = ui->passNumDropDown->currentText().toInt();
+    QTime currenttime = ui->currtimeEdit->time();
 
-    ui->outputBox->append(QString::fromStdString(this->ecs->flrreq("down",flrnuminput,passnuminput)));
+    ui->outputBox->append(QString::fromStdString(this->ecs->flrreq("down",flrnuminput,passnuminput,currenttime)));
     //pass in the pointer of the the elev dropdown and currweight linedit to be able to edit inside of ecs
 }
 
@@ -182,8 +184,9 @@ void MainWindow::on_overldBtn_clicked()
 {
     int flrnuminput = ui->flrNumDropDown->currentText().toInt();
     int heavypass = ui->passNuminit->text().toInt();//num of passengers, is the last pos in pass array we init as the heavy passenger for this case
+    QTime currenttime = ui->currtimeEdit->time();
 
-    ui->outputBox->append(QString::fromStdString(this->ecs->flrreq("up",flrnuminput,heavypass + 1)));
+    ui->outputBox->append(QString::fromStdString(this->ecs->flrreq("up",flrnuminput,heavypass + 1,currenttime)));
 }
 
 void MainWindow::on_helpBtn_clicked()
