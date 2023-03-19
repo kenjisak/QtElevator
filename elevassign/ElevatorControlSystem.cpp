@@ -138,6 +138,7 @@ string ElevatorControlSystem::safetyreq(string safetyissue){
 
         for(int i = 0; i < numofelevs;i++){//go through and make all elevators move to safe floor
             elevators[i]->setsafetymsg("Theres a " + safetyissue + " in the building, please disembark the elevator once the elevators reach the main floor.");
+            elevators[i]->displayandplaysafetymsg();
             allactions += "\nCar " + to_string(elevators[i]->getElevNum()) + " Display: Floor " + to_string(elevators[i]->getcurrflrnum());
             while (safefloor != elevators[i]->getcurrflrnum()){//make the elevator move up or down until it reaches the safe floor
                 if(elevators[i]->getcurrflrnum() < i){// if the elevator is on a floor below the safe floor
@@ -175,7 +176,7 @@ string ElevatorControlSystem::elevsafetyreq(string safetyissue, int elevnum, int
         elevators[elevnum]->setsafetymsg("Theres a " + safetyissue + " in carrying weight. Please reduce the load.");
         allactions += elevators[elevnum]->displayandplaysafetymsg();
         elevators[elevnum]->setsafetymsg("");//resets safetymsg
-        allactions += "\nPassenger " + to_string(passnum) + "walks out of Car " + to_string(elevnum + 1);
+        allactions += "\nPassenger " + to_string(passnum) + " walks out of Car " + to_string(elevnum + 1);
     }
     if(safetyissue == "help"){
         allactions += "\n========Help Activated=========";
